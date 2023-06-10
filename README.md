@@ -13,7 +13,7 @@ Open [http://localhost:8081](http://localhost:8081) to view it in your browser.
 
 ### Deployment:
 
-Netlify deployment URL: [Task Ninja]()
+Netlify deployment URL: [Task Ninja](https://todo-taskninja.netlify.app/)
 
 ### Tech Stack/Libaries Used:
 
