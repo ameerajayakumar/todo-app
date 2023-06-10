@@ -1,11 +1,18 @@
-import { FC, ReactNode, createContext, useEffect, useState } from 'react';
+import { Dispatch, FC, ReactNode, SetStateAction, createContext, useEffect, useState } from 'react';
 import { jwtToken, userAuth } from '../backend/data/mockAuth';
 
+export interface Todo {
+  id: string;
+  title: string;
+  nestedTodos?: Todo[];
+}
 export interface TodoListContextInterface {
   login: (username: string, password: string) => void;
   logout: () => void;
   isAuthenticated: boolean;
   isLoading: boolean;
+  todoList: Todo[];
+  setTodoList: Dispatch<SetStateAction<Todo[]>>;
 }
 
 export interface TodoListProviderProps {
@@ -16,6 +23,13 @@ const defaultState = {
   logout: () => {},
   isAuthenticated: false,
   isLoading: true,
+  todoList: [
+    {
+      id: '',
+      title: '',
+    },
+  ],
+  setTodoList: (todo: Todo[]) => {},
 } as TodoListContextInterface;
 
 export const TodoListContext = createContext(defaultState);
@@ -23,6 +37,7 @@ export const TodoListContext = createContext(defaultState);
 export const TodoListProvider: FC<TodoListProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [todoList, setTodoList] = useState<Todo[]>([]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -45,5 +60,5 @@ export const TodoListProvider: FC<TodoListProviderProps> = ({ children }) => {
     localStorage.removeItem('token');
   };
 
-  return <TodoListContext.Provider value={{ login, logout, isAuthenticated, isLoading }}>{children}</TodoListContext.Provider>;
+  return <TodoListContext.Provider value={{ login, logout, isAuthenticated, isLoading, todoList, setTodoList }}>{children}</TodoListContext.Provider>;
 };
