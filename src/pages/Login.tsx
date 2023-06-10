@@ -12,12 +12,15 @@ export const Login: FC = () => {
   const handleLogin = (event: FormEvent) => {
     event.preventDefault();
     setErrorMessage('');
+    if (validateInput()) login(username, password);
+  };
 
-    if (username === '' || password === '') {
-      setErrorMessage('Please enter both username and password');
-    } else {
-      login(username, password);
-    }
+  const validateInput = () => {
+    if (username.trim() === '') {
+      setErrorMessage('Username is required');
+    } else if (password.trim() === '') setErrorMessage('Password is required');
+
+    return true;
   };
 
   return (
@@ -32,13 +35,20 @@ export const Login: FC = () => {
           <Typography variant="h4">Task Ninja</Typography>
           <form className="mt-6 mb-2 max-w-screen-lg w-96" onSubmit={handleLogin}>
             <div className="mb-4 flex flex-col gap-6">
-              <Input size="lg" label="Email" color="lime" className="text-[#d7d7d7]" value={username} onChange={(e) => setUsername(e.target.value)} />
+              <Input
+                size="lg"
+                label="Email"
+                color="lime"
+                className="!text-[#d7d7d7]"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
               <Input
                 type="password"
                 size="lg"
                 label="Password"
                 color="lime"
-                className="text-[#d7d7d7]"
+                className="!text-[#d7d7d7]"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

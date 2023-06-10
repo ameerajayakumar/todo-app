@@ -62,18 +62,18 @@ export const Dashboard: FC = () => {
   return (
     <div className="h-screen">
       <Header />
-      <div className="flex justify-center h-[90%]">
-        <Card shadow={true} className="mt-10 w-[50%] max-h-[90%] flex flex-col bg-[#273244] text-[#F5F5F5] overflow-auto">
+      <div className="flex justify-center min-h-[40%] max-h-[90%]">
+        <Card shadow={true} className="mt-10 min-w-[40%] max-w-[50%] flex flex-col bg-[#273244] text-[#F5F5F5] overflow-auto">
           <div className="flex flex-col items-center">
             <Typography variant="h4" className="mt-10">
-              Task List
+              Task Board
             </Typography>
             <div className="flex mt-10 gap-2">
               <Input
                 size="lg"
                 label="Add new task"
                 color="lime"
-                className="text-[#d7d7d7] w-[350px]"
+                className="!text-[#d7d7d7] w-[350px]"
                 value={task}
                 onChange={(e) => setTask(e.target.value)}
               />
@@ -88,7 +88,7 @@ export const Dashboard: FC = () => {
                 <li
                   key={todo.id}
                   className={`hover:bg-[#273244] text-[#d7d7d7] hover:text-[#d7d7d7] focus:text-[#d7d7d7] focus:bg-[#273244] active:text-[#d7d7d7] active:bg-[#273244] flex flex-col items-start ${
-                    checkedTasks.includes(todo.id) ? 'text-[#a3f22d75] hover:text-[#a3f22d75]' : ''
+                    checkedTasks.includes(todo.id) ? '!text-[#a3f22d75] hover:text-[#a3f22d75]' : ''
                   }`}
                 >
                   <div className="w-full flex justify-start items-center">
@@ -100,7 +100,7 @@ export const Dashboard: FC = () => {
                     />
                     <Typography
                       onClick={() => handleSubTaskInput(todo.id)}
-                      className={`cursor-pointer ${checkedTasks.includes(todo.id) ? 'line-through' : ''}`}
+                      className={`cursor-pointer font-semibold ${checkedTasks.includes(todo.id) ? 'line-through' : ''}`}
                     >
                       {todo.title}
                     </Typography>
@@ -112,7 +112,7 @@ export const Dashboard: FC = () => {
                         <li
                           key={subtask.id}
                           className={`hover:bg-[#273244] text-[#d7d7d7] hover:text-[#d7d7d7] focus:text-[#d7d7d7] focus:bg-[#273244] active:text-[#d7d7d7] active:bg-[#273244] flex justify-start items-center ${
-                            checkedTasks.includes(subtask.id) ? 'text-[#a3f22d75] hover:text-[#a3f22d75]' : ''
+                            checkedTasks.includes(subtask.id) ? '!text-[#a3f22d75] hover:text-[#a3f22d75]' : ''
                           }`}
                         >
                           <Checkbox
@@ -132,7 +132,7 @@ export const Dashboard: FC = () => {
                         size="md"
                         label="Add sub task"
                         color="lime"
-                        className="text-[#d7d7d7] w-[300px]"
+                        className="!text-[#d7d7d7] w-[300px]"
                         value={subTask}
                         onChange={(e) => setSubTask(e.target.value)}
                       />
