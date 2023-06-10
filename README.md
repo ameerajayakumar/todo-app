@@ -1,46 +1,55 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Getting Started with ToDo Application
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### npm i
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### npm start
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Runs the app in the development mode locally.
+Open [http://localhost:8081](http://localhost:8081) to view it in your browser.
 
-### `npm test`
+### Deployment:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Netlify deployment URL: [Task Ninja]()
 
-### `npm run build`
+### Tech Stack/Libaries Used:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- HTML
+- CSS
+- Typescript
+- React
+- React Router
+- Context API
+- Tailwind CSS
+- Material Tailwind
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Features Implemented:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Login page implemented:
+  - Input fields for username and password, login button
+  - User authentication done by mock username/password and mock token key
+  - Validation of username/password done: show error on login component
+  - Proper routing done before and after authentication
+- Loading component added:
+  - Loading component shows up if slow loading of pages
+- Dashboard features:
+  - Header shows application name( non-active), user details(mock), logout button
+  - Logout functionality implemented
+  - Ability to add main tasks (highlighted in bold to distinguish between main task and sub task)
+  - Clicking on main task, opens input to add sub task
+  - Ability to add sub tasks to main task (only one level sub task)
+  - Ability to mark task & sub task as completed (visually shows task as striked out)
+  - Added Todo list is retained even after page refresh or if user logout & login back (localstorage is used to store data here)
+- Global state management:
+  - Used React Context API to store and manage different state and data across components/pages
 
-### `npm run eject`
+### Potential Improvements:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Show loading spinner after clicking on Login button during authentication check
+- More validation can be done on user inputs on Login form
+- Show error on username/password mismatch or if user is not authenticated
+- On page refresh, todo list is retained. But the checked(completed) state of todo items are not.
+- Improve UI/UX generally
