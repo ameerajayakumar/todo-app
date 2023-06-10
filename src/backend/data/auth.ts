@@ -19,8 +19,8 @@ interface JwtTokenInterface {
 
 export const userAuth: UserAuthInterface = {
   data: {
-    username: 'admin',
-    password: 'Password@123',
+    username: 'a',
+    password: 'p',
   },
 };
 
