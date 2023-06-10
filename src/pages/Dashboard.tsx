@@ -1,33 +1,69 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Card, Input, Typography, Checkbox } from '@material-tailwind/react';
 import React, { FC, useContext, useState } from 'react';
 import { Header } from '../components/Header';
 import { Todo, TodoListContext } from '../contexts/TodoListContext';
 
 export const Dashboard: FC = () => {
-  const [newTodo, setNewTodo] = useState('');
+  const [task, setTask] = useState('');
+  const [subTask, setSubTask] = useState('');
   const [selectedId, setSelectedId] = useState('');
+  const [checkedTasks, setCheckedTasks] = useState<String[]>([]);
   const { todoList, setTodoList } = useContext(TodoListContext);
 
+  // to handle main todo
   const handleAddTodo = () => {
-    const newItem: Todo = {
+    const newTask: Todo = {
       id: Date.now().toString(),
-      title: newTodo,
-      nestedTodos: [],
+      title: task,
+      subTasks: [],
     };
-    setTodoList((prevList) => [...prevList, newItem]);
-    setNewTodo('');
+    setTodoList((prevList) => [...prevList, newTask]);
+    setTask('');
   };
-  console.log('todoList', todoList);
 
+  // to handle subtask input & add btn
   const handleSubTaskInput = (todoId: string) => {
     setSelectedId(todoId === selectedId ? '' : todoId);
   };
 
+  // to handle checkbox changes
+  const handleCheckbox = (todoId: string) => {
+    if (checkedTasks.includes(todoId)) {
+      setCheckedTasks(checkedTasks.filter((id) => id !== todoId));
+    } else {
+      setCheckedTasks([...checkedTasks, todoId]);
+    }
+  };
+
+  // to handle subtask todo
+  const handleSubTaskTodo = (todoId: string) => {
+    const newSubTask: Todo = {
+      id: Date.now().toString(),
+      title: subTask,
+      subTasks: [],
+    };
+
+    setTodoList((prevList) =>
+      prevList.map((todo) => {
+        if (todoId === todo.id) {
+          return {
+            ...todo,
+            subTasks: [...todo.subTasks, newSubTask],
+          };
+        }
+        return todo;
+      })
+    );
+    setSelectedId('');
+    setSubTask('');
+  };
+
   return (
-    <div className="h-full ">
+    <div className="h-screen">
       <Header />
-      <div className="flex justify-center mt-20 ">
-        <Card shadow={true} className="w-[70%] min-h-[350px] max-h-[550px] flex flex-col bg-[#273244] text-[#F5F5F5] overflow-auto">
+      <div className="flex justify-center h-[90%]">
+        <Card shadow={true} className="mt-10 w-[50%] max-h-[90%] flex flex-col bg-[#273244] text-[#F5F5F5] overflow-auto">
           <div className="flex flex-col items-center">
             <Typography variant="h4" className="mt-10">
               Task List
@@ -38,8 +74,8 @@ export const Dashboard: FC = () => {
                 label="Add new task"
                 color="lime"
                 className="text-[#d7d7d7] w-[350px]"
-                value={newTodo}
-                onChange={(e) => setNewTodo(e.target.value)}
+                value={task}
+                onChange={(e) => setTask(e.target.value)}
               />
               <Button className="bg-[#A4F22D] text-black shadow-none hover:shadow-none" onClick={handleAddTodo}>
                 +
@@ -50,22 +86,42 @@ export const Dashboard: FC = () => {
             <ul className="p-7">
               {todoList.map((todo) => (
                 <li
-                  className="hover:bg-[#273244] text-[#d7d7d7] hover:text-[#d7d7d7] focus:text-[#d7d7d7] focus:bg-[#273244] active:text-[#d7d7d7] active:bg-[#273244] flex flex-col items-start"
                   key={todo.id}
+                  className={`hover:bg-[#273244] text-[#d7d7d7] hover:text-[#d7d7d7] focus:text-[#d7d7d7] focus:bg-[#273244] active:text-[#d7d7d7] active:bg-[#273244] flex flex-col items-start ${
+                    checkedTasks.includes(todo.id) ? 'text-[#a3f22d75] hover:text-[#a3f22d75]' : ''
+                  }`}
                 >
                   <div className="w-full flex justify-start items-center">
-                    <Checkbox color="lime" />
-                    <Typography onClick={() => handleSubTaskInput(todo.id)}>{todo.title}</Typography>
+                    <Checkbox
+                      color="lime"
+                      className="hover:before:opacity-0"
+                      checked={checkedTasks.includes(todo.id)}
+                      onChange={() => handleCheckbox(todo.id)}
+                    />
+                    <Typography
+                      onClick={() => handleSubTaskInput(todo.id)}
+                      className={`cursor-pointer ${checkedTasks.includes(todo.id) ? 'line-through' : ''}`}
+                    >
+                      {todo.title}
+                    </Typography>
                   </div>
 
-                  {todo.nestedTodos && todo.nestedTodos.length > 0 && (
-                    <ul>
-                      {todo.nestedTodos?.map((subtask) => (
+                  {todo.subTasks && todo.subTasks.length > 0 && (
+                    <ul className="pl-3">
+                      {todo.subTasks.map((subtask) => (
                         <li
                           key={subtask.id}
-                          className="hover:bg-[#273244] text-[#d7d7d7] hover:text-[#d7d7d7] focus:text-[#d7d7d7] focus:bg-[#273244] active:text-[#d7d7d7] active:bg-[#273244] flex justify-start items-center"
+                          className={`hover:bg-[#273244] text-[#d7d7d7] hover:text-[#d7d7d7] focus:text-[#d7d7d7] focus:bg-[#273244] active:text-[#d7d7d7] active:bg-[#273244] flex justify-start items-center ${
+                            checkedTasks.includes(subtask.id) ? 'text-[#a3f22d75] hover:text-[#a3f22d75]' : ''
+                          }`}
                         >
-                          {subtask.title}
+                          <Checkbox
+                            color="lime"
+                            className="hover:before:opacity-0"
+                            checked={checkedTasks.includes(subtask.id)}
+                            onChange={() => handleCheckbox(subtask.id)}
+                          />
+                          <Typography className={`${checkedTasks.includes(subtask.id) ? 'line-through' : ''}`}>{subtask.title}</Typography>
                         </li>
                       ))}
                     </ul>
@@ -77,10 +133,12 @@ export const Dashboard: FC = () => {
                         label="Add sub task"
                         color="lime"
                         className="text-[#d7d7d7] w-[300px]"
-                        // value={newTodo}
-                        // onChange={(e) => setNewTodo(e.target.value)}
+                        value={subTask}
+                        onChange={(e) => setSubTask(e.target.value)}
                       />
-                      <Button className="bg-[#A4F22D] text-black shadow-none hover:shadow-none">+</Button>
+                      <Button className="bg-[#A4F22D] text-black shadow-none hover:shadow-none" onClick={() => handleSubTaskTodo(todo.id)}>
+                        +
+                      </Button>
                     </div>
                   )}
                 </li>

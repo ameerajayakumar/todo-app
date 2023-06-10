@@ -4,7 +4,7 @@ import { jwtToken, userAuth } from '../backend/data/mockAuth';
 export interface Todo {
   id: string;
   title: string;
-  nestedTodos?: Todo[];
+  subTasks: Todo[];
 }
 export interface TodoListContextInterface {
   login: (username: string, password: string) => void;
@@ -23,12 +23,7 @@ const defaultState = {
   logout: () => {},
   isAuthenticated: false,
   isLoading: true,
-  todoList: [
-    {
-      id: '',
-      title: '',
-    },
-  ],
+  todoList: [],
   setTodoList: (todo: Todo[]) => {},
 } as TodoListContextInterface;
 
@@ -45,6 +40,19 @@ export const TodoListProvider: FC<TodoListProviderProps> = ({ children }) => {
       setIsAuthenticated(true);
     }
     setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    if (todoList.length > 0) localStorage.setItem('todolist', JSON.stringify(todoList));
+  }, [todoList]);
+
+  useEffect(() => {
+    const data = localStorage.getItem('todolist');
+    console.log('data', data);
+
+    if (data) {
+      setTodoList(JSON.parse(data));
+    }
   }, []);
 
   const login = (username: string, password: string) => {
