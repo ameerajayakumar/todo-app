@@ -45,6 +45,7 @@ Netlify deployment URL: [Task Ninja]()
   - Added Todo list is retained even after page refresh or if user logout & login back (localstorage is used to store data here)
 - Global state management:
   - Used React Context API to store and manage different state and data across components/pages
+- Application deployed on Netlify
 
 ### Potential Improvements:
 
