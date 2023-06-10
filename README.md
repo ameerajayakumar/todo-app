@@ -9,6 +9,7 @@ In the project directory( cd todo-app), you can run:
 ### npm start
 
 Runs the app in the development mode locally.
+
 Open [http://localhost:8081](http://localhost:8081) to view it in your browser.
 
 ### Deployment:
