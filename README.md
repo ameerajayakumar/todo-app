@@ -54,3 +54,4 @@ Netlify deployment URL: [Task Ninja]()
 - Show error on username/password mismatch or if user is not authenticated
 - On page refresh, todo list is retained. But the checked(completed) state of todo items are not.
 - Improve UI/UX generally
+- Add edit/delete capability to main task and sub task
