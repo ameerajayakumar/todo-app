@@ -1,5 +1,5 @@
 import { FC, ReactNode, createContext, useEffect, useState } from 'react';
-import { jwtToken, userAuth } from '../backend/data/auth';
+import { jwtToken, userAuth } from '../backend/data/mockAuth';
 
 export interface TodoListContextInterface {
   login: (username: string, password: string) => void;

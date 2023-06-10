@@ -1,7 +1,7 @@
 import { Button, Typography } from '@material-tailwind/react';
 import React, { useContext } from 'react';
 import { TodoListContext } from '../contexts/TodoListContext';
-import { userDetails } from '../backend/data/auth';
+import { userDetails } from '../backend/data/mockAuth';
 
 export const Header = () => {
   const { logout } = useContext(TodoListContext);

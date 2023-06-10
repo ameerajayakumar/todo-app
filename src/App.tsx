@@ -6,7 +6,6 @@ import { TodoListContext } from './contexts/TodoListContext';
 
 const App: FC = () => {
   const { isAuthenticated } = useContext(TodoListContext);
-  console.log('isAuthenticated', isAuthenticated);
 
   return (
     <Router>
